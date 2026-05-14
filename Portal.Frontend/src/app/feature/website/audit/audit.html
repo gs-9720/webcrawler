@@ -1,0 +1,652 @@
+<div class="page-header d-print-none">
+    <div class="container-xl">
+        <div class="row g-2 align-items-center">
+            <div class="col">
+
+                <!-- Page pre-title -->
+                <div class="page-pretitle">
+                    Website Audit
+                </div>
+                <h1 class="page-title">
+                    {{url}}
+                </h1>
+            </div>
+
+            <div class="col-auto ms-auto d-print-none">
+                <div class="btn-list">
+                    <span class="d-none d-sm-inline">
+                        <a href="#" class="btn btn-sm btn-primary">
+                            + Check for another URL
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<main id="content" class="page-body" *ngIf="!isloading">
+    <div class="container-xl">
+        <div class="row row-cards">
+
+            <div class="col-lg-12">
+                <div class="row row-cards">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h2 class="mb-3">Current Score : <strong>{{report.score}} </strong> out of 100</h2>
+                                <div class="progress progress-separated mb-3">
+                                    <div class="progress-bar  {{report.score >= 70 ? 'bg-success' : report.score >= 30 ? 'bg-warning' : 'bg-danger'}}"
+                                        role="progressbar" style="width: {{report.score}}%" aria-label="Regular"></div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-auto d-flex align-items-center pe-2">
+                                        <span class="legend me-2 bg-success"></span>
+                                        <span>Good Score </span>
+
+                                    </div>
+                                    <div class="col-auto d-flex align-items-center px-2">
+                                        <span class="legend me-2 bg-warning"></span>
+                                        <span>Need Improvement</span>
+
+                                    </div>
+                                    <div class="col-auto d-flex align-items-center px-2">
+                                        <span class="legend me-2 bg-danger"></span>
+                                        <span>Poor</span>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <span> <strong>Page Title :</strong> {{report.structure.title}}</span>
+                                </div>
+                                <div class="row mb-2">
+                                    <span> <strong>Page Description :</strong>
+                                        {{report.structure.metaDescription}}</span>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="col-sm-6 col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="h2 mb-3">Content Clarity</div>
+                        <div class="d-flex">
+                            <div>Value Proposition Above Fold</div>
+                            <div class="ms-auto">
+                                <span class="d-inline-flex align-items-center">
+                                    <website-audit-icon [warning]="!report.contentClarity.valuePropAboveFold"
+                                        [success]="report.contentClarity.valuePropAboveFold"></website-audit-icon>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="d-flex mb-2">
+                            <div>Audience Type</div>
+                            <div class="ms-auto">
+                                <span class="d-inline-flex align-items-center lh-1">
+                                    <strong>{{report.contentClarity.audienceType}}</strong>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="d-flex mb-2">
+                            <div>Benefit Feature Ratio</div>
+                            <div class="ms-auto">
+                                <span class="d-inline-flex align-items-center lh-1">
+                                    <strong>{{report.contentClarity.benefitFeatureRatio}}</strong>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="h2 mb-3">Conversion</div>
+                        <div class="d-flex ">
+                            <div>Primary Cta Above Fold</div>
+                            <div class="ms-auto">
+                                <span class="text-green d-inline-flex align-items-center lh-1">
+                                    <website-audit-icon [warning]="!report.conversion.primaryCtaAboveFold"
+                                        [success]="report.conversion.primaryCtaAboveFold"></website-audit-icon>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="d-flex ">
+                            <div>Has Secondary Ctas</div>
+                            <div class="ms-auto">
+                                <span class="text-green d-inline-flex align-items-center lh-1">
+
+                                    <website-audit-icon [warning]="!report.conversion.hasSecondaryCtas"
+                                        [success]="report.conversion.hasSecondaryCtas"></website-audit-icon>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <div>Contact Form</div>
+                            <div class="ms-auto">
+                                <span class="text-green d-inline-flex align-items-center lh-1">
+                                    <website-audit-icon [warning]="!report.conversion.hasContactForm"
+                                        [success]="report.conversion.hasContactForm"></website-audit-icon>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <div>Pricing Visible</div>
+                            <div class="ms-auto">
+                                <span class="text-green d-inline-flex align-items-center lh-1">
+                                    <website-audit-icon [warning]="!report.conversion.pricingVisible"
+                                        [success]="report.conversion.pricingVisible"></website-audit-icon>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="h2 mb-3">Technical</div>
+                        <div class="d-flex">
+                            <div>Https Setup</div>
+                            <div class="ms-auto">
+                                <span class="text-green d-inline-flex align-items-center lh-1">
+                                    <website-audit-icon [warning]="!report.technical.isHttps"
+                                        [success]="report.technical.isHttps"></website-audit-icon>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <div>Has Canonical</div>
+                            <div class="ms-auto">
+                                <span class="text-green d-inline-flex align-items-center lh-1">
+                                    <website-audit-icon [warning]="!report.technical.hasCanonical"
+                                        [success]="report.technical.hasCanonical"></website-audit-icon>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <div>Mobile Friendly</div>
+                            <div class="ms-auto">
+                                <span class="text-green d-inline-flex align-items-center lh-1">
+                                    <website-audit-icon [warning]="!report.technical.mobileFriendly"
+                                        [success]="report.technical.mobileFriendly"></website-audit-icon>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <div>Page Load Time (ms)</div>
+                            <div class="ms-auto">
+                                <span class="d-inline-flex align-items-center lh-1">
+                                    <strong> {{report.technical.pageLoadMs}} ms </strong> </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="row row-cards">
+                    <div class="col-12">
+                        <h3>H1 Headings </h3>
+                        <div class="card" style="height: 20rem">
+                            <div class="card-body card-body-scrollable card-body-scrollable-shadow">
+                                <div class="empty" *ngIf="!report.structure.h1s || report.structure.h1s.length === 0">
+                                    <p class="empty-title">Not found</p>
+                                </div>
+                                <div class="divide-y">
+                                    <div *ngFor="let link of report.structure.h1s">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="text-truncate">
+                                                    <h1 class="m-0 text-wrap text-secondary">{{link}}</h1>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="row row-cards">
+                    <div class="col-12">
+                        <h3>H2 Headings </h3>
+                        <div class="card" style="height: 20rem">
+                            <div class="card-body card-body-scrollable card-body-scrollable-shadow">
+                                <div class="empty" *ngIf="!report.structure.h2s || report.structure.h2s.length === 0">
+                                    <p class="empty-title">Not found</p>
+                                </div>
+                                <div class="divide-y">
+                                    <ng-container *ngFor="let link of report.structure.h2s">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="text-truncate">
+                                                    <h2 class="m-0 text-wrap text-secondary">{{link}}</h2>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="row row-cards">
+                    <div class="col-12">
+                        <h3>Top Links</h3>
+                        <div class="card" style="height: 20rem">
+                            <div class="card-body card-body-scrollable card-body-scrollable-shadow">
+                                <div class="empty"
+                                    *ngIf="!report.structure.internalLinks || report.structure.internalLinks.length === 0">
+                                    <p class="empty-title">Not found</p>
+                                </div>
+                                <div class="divide-y">
+                                    <ng-container *ngFor="let link of report.structure.internalLinks">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="text-truncate">
+                                                    <a href="{{url + link}}" target="_blank"
+                                                        class="m-0 text-wrap">{{link}}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+
+
+<main id="content" class="page-body" *ngIf="isloading">
+    <div class="container-xl">
+        <div class="row row-cards">
+            <div class="col-lg-12">
+                <div class="row row-cards">
+                    <div class="col-12">
+                        <div class="card ">
+                            <div class="card-body">
+
+                                <div class="col-3 mb-2">
+                                    <div class="placeholder placeholder-xs col-9"></div>
+                                </div>
+                                <div class="col-7 mb-4">
+                                    <div class="placeholder placeholder-xs col-9"></div>
+                                </div>
+                                <div class="col-10 mb-2">
+                                    <div class="placeholder placeholder-xs col-9"></div>
+                                </div>
+                                <div class="col-10 mb-4">
+                                    <div class="placeholder placeholder-xs col-9"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-lg-4">
+                <div class="card placeholder-glow">
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush placeholder-glow">
+                            <li class="list-group-item p-2">
+                                <div class="row align-items-center">
+                                    <div class="col-7">
+                                        <div class="placeholder placeholder-xs col-9"></div>
+                                    </div>
+                                    <div class="col-2 ms-auto text-end">
+                                        <div class="placeholder placeholder-xs col-8"></div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="list-group-item p-2">
+                                <div class="row align-items-center">
+                                    <div class="col-7">
+                                        <div class="placeholder placeholder-xs col-9"></div>
+                                    </div>
+                                    <div class="col-2 ms-auto text-end">
+                                        <div class="placeholder placeholder-xs col-8"></div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item p-2">
+                                <div class="row align-items-center">
+                                    <div class="col-7">
+                                        <div class="placeholder placeholder-xs col-9"></div>
+                                    </div>
+                                    <div class="col-2 ms-auto text-end">
+                                        <div class="placeholder placeholder-xs col-8"></div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item p-2">
+                                <div class="row align-items-center">
+                                    <div class="col-7">
+                                        <div class="placeholder placeholder-xs col-9"></div>
+                                    </div>
+                                    <div class="col-2 ms-auto text-end">
+                                        <div class="placeholder placeholder-xs col-8"></div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-4">
+                <div class="card placeholder-glow">
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush placeholder-glow">
+                            <li class="list-group-item p-2">
+                                <div class="row align-items-center">
+                                    <div class="col-7">
+                                        <div class="placeholder placeholder-xs col-9"></div>
+                                    </div>
+                                    <div class="col-2 ms-auto text-end">
+                                        <div class="placeholder placeholder-xs col-8"></div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="list-group-item p-2">
+                                <div class="row align-items-center">
+                                    <div class="col-7">
+                                        <div class="placeholder placeholder-xs col-9"></div>
+                                    </div>
+                                    <div class="col-2 ms-auto text-end">
+                                        <div class="placeholder placeholder-xs col-8"></div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item p-2">
+                                <div class="row align-items-center">
+                                    <div class="col-7">
+                                        <div class="placeholder placeholder-xs col-9"></div>
+                                    </div>
+                                    <div class="col-2 ms-auto text-end">
+                                        <div class="placeholder placeholder-xs col-8"></div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item p-2">
+                                <div class="row align-items-center">
+                                    <div class="col-7">
+                                        <div class="placeholder placeholder-xs col-9"></div>
+                                    </div>
+                                    <div class="col-2 ms-auto text-end">
+                                        <div class="placeholder placeholder-xs col-8"></div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-4">
+                <div class="card placeholder-glow">
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush placeholder-glow">
+                            <li class="list-group-item p-2">
+                                <div class="row align-items-center">
+                                    <div class="col-7">
+                                        <div class="placeholder placeholder-xs col-9"></div>
+                                    </div>
+                                    <div class="col-2 ms-auto text-end">
+                                        <div class="placeholder placeholder-xs col-8"></div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="list-group-item p-2">
+                                <div class="row align-items-center">
+                                    <div class="col-7">
+                                        <div class="placeholder placeholder-xs col-9"></div>
+                                    </div>
+                                    <div class="col-2 ms-auto text-end">
+                                        <div class="placeholder placeholder-xs col-8"></div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item p-2">
+                                <div class="row align-items-center">
+                                    <div class="col-7">
+                                        <div class="placeholder placeholder-xs col-9"></div>
+                                    </div>
+                                    <div class="col-2 ms-auto text-end">
+                                        <div class="placeholder placeholder-xs col-8"></div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item p-2">
+                                <div class="row align-items-center">
+                                    <div class="col-7">
+                                        <div class="placeholder placeholder-xs col-9"></div>
+                                    </div>
+                                    <div class="col-2 ms-auto text-end">
+                                        <div class="placeholder placeholder-xs col-8"></div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="row row-cards">
+                    <div class="col-12">
+                        <div class="card">
+                            <ul class="list-group list-group-flush placeholder-glow">
+
+                                <li class="list-group-item">
+                                    <div class="row align-items-center">
+                                        <div class="col-7">
+                                            <div class="placeholder placeholder-xs col-9"></div>
+                                            <div class="placeholder placeholder-xs col-7"></div>
+                                        </div>
+                                        <div class="col-2 ms-auto text-end">
+                                            <div class="placeholder placeholder-xs col-8"></div>
+                                            <div class="placeholder placeholder-xs col-10"></div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <div class="row align-items-center">
+                                        <div class="col-7">
+                                            <div class="placeholder placeholder-xs col-9"></div>
+                                            <div class="placeholder placeholder-xs col-7"></div>
+                                        </div>
+                                        <div class="col-2 ms-auto text-end">
+                                            <div class="placeholder placeholder-xs col-8"></div>
+                                            <div class="placeholder placeholder-xs col-10"></div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <div class="row align-items-center">
+                                        <div class="col-7">
+                                            <div class="placeholder placeholder-xs col-9"></div>
+                                            <div class="placeholder placeholder-xs col-7"></div>
+                                        </div>
+                                        <div class="col-2 ms-auto text-end">
+                                            <div class="placeholder placeholder-xs col-8"></div>
+                                            <div class="placeholder placeholder-xs col-10"></div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <div class="row align-items-center">
+                                        <div class="col-7">
+                                            <div class="placeholder placeholder-xs col-9"></div>
+                                            <div class="placeholder placeholder-xs col-7"></div>
+                                        </div>
+                                        <div class="col-2 ms-auto text-end">
+                                            <div class="placeholder placeholder-xs col-8"></div>
+                                            <div class="placeholder placeholder-xs col-10"></div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="row row-cards">
+                    <div class="col-12">
+                        <div class="card">
+                            <ul class="list-group list-group-flush placeholder-glow">
+
+                                <li class="list-group-item">
+                                    <div class="row align-items-center">
+                                        <div class="col-7">
+                                            <div class="placeholder placeholder-xs col-9"></div>
+                                            <div class="placeholder placeholder-xs col-7"></div>
+                                        </div>
+                                        <div class="col-2 ms-auto text-end">
+                                            <div class="placeholder placeholder-xs col-8"></div>
+                                            <div class="placeholder placeholder-xs col-10"></div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <div class="row align-items-center">
+                                        <div class="col-7">
+                                            <div class="placeholder placeholder-xs col-9"></div>
+                                            <div class="placeholder placeholder-xs col-7"></div>
+                                        </div>
+                                        <div class="col-2 ms-auto text-end">
+                                            <div class="placeholder placeholder-xs col-8"></div>
+                                            <div class="placeholder placeholder-xs col-10"></div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <div class="row align-items-center">
+                                        <div class="col-7">
+                                            <div class="placeholder placeholder-xs col-9"></div>
+                                            <div class="placeholder placeholder-xs col-7"></div>
+                                        </div>
+                                        <div class="col-2 ms-auto text-end">
+                                            <div class="placeholder placeholder-xs col-8"></div>
+                                            <div class="placeholder placeholder-xs col-10"></div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <div class="row align-items-center">
+                                        <div class="col-7">
+                                            <div class="placeholder placeholder-xs col-9"></div>
+                                            <div class="placeholder placeholder-xs col-7"></div>
+                                        </div>
+                                        <div class="col-2 ms-auto text-end">
+                                            <div class="placeholder placeholder-xs col-8"></div>
+                                            <div class="placeholder placeholder-xs col-10"></div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="row row-cards">
+                    <div class="col-12">
+                        <div class="card">
+                            <ul class="list-group list-group-flush placeholder-glow">
+
+                                <li class="list-group-item">
+                                    <div class="row align-items-center">
+                                        <div class="col-7">
+                                            <div class="placeholder placeholder-xs col-9"></div>
+                                            <div class="placeholder placeholder-xs col-7"></div>
+                                        </div>
+                                        <div class="col-2 ms-auto text-end">
+                                            <div class="placeholder placeholder-xs col-8"></div>
+                                            <div class="placeholder placeholder-xs col-10"></div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <div class="row align-items-center">
+                                        <div class="col-7">
+                                            <div class="placeholder placeholder-xs col-9"></div>
+                                            <div class="placeholder placeholder-xs col-7"></div>
+                                        </div>
+                                        <div class="col-2 ms-auto text-end">
+                                            <div class="placeholder placeholder-xs col-8"></div>
+                                            <div class="placeholder placeholder-xs col-10"></div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <div class="row align-items-center">
+                                        <div class="col-7">
+                                            <div class="placeholder placeholder-xs col-9"></div>
+                                            <div class="placeholder placeholder-xs col-7"></div>
+                                        </div>
+                                        <div class="col-2 ms-auto text-end">
+                                            <div class="placeholder placeholder-xs col-8"></div>
+                                            <div class="placeholder placeholder-xs col-10"></div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <div class="row align-items-center">
+                                        <div class="col-7">
+                                            <div class="placeholder placeholder-xs col-9"></div>
+                                            <div class="placeholder placeholder-xs col-7"></div>
+                                        </div>
+                                        <div class="col-2 ms-auto text-end">
+                                            <div class="placeholder placeholder-xs col-8"></div>
+                                            <div class="placeholder placeholder-xs col-10"></div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
